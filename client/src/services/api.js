@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+// Under Vercel Services, /api routes directly to the 'server' service on the same domain
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },

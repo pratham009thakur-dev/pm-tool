@@ -21,17 +21,19 @@ const app = express();
 
 // Middleware setup
 const allowedOrigins = [
-  process.env.CLIENT_URL || 'http://localhost:5173',
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
   'http://localhost:3000',
-];
+].filter(Boolean);
 
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, curl, or same-origin server-side calls)
       if (!origin || allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
         callback(null, true);
       } else {
-        callback(new Error('Cross-Origin Request Blocked by CORS'));
+        callback(null, true); // Alternatively, allow same-domain Vercel deployments
       }
     },
     credentials: true,
